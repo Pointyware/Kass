@@ -27,7 +27,7 @@ kotlin {
         iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
-            baseName = "assertions"
+            baseName = "mocks"
             isStatic = true
             framework.add(this)
         }
@@ -38,6 +38,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.kotlin.test)
+                implementation(libs.kotlinx.coroutines)
             }
         }
         val commonTest by getting {
@@ -74,7 +75,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.pointyware.kass.assertions"
+    namespace = "org.pointyware.kass.mocks"
     compileSdk = 34
     defaultConfig {
         minSdk = 21
