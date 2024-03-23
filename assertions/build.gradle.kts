@@ -6,6 +6,13 @@ plugins {
 }
 
 kotlin {
+    jvm {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "1.8"
+            }
+        }
+    }
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -13,38 +20,63 @@ kotlin {
             }
         }
     }
-    
-    val xcf = XCFramework()
+    val framework = XCFramework()
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
             baseName = "assertions"
-            xcf.add(this)
             isStatic = true
+            framework.add(this)
         }
     }
 
+    applyDefaultHierarchyTemplate()
     sourceSets {
-        commonMain.dependencies {
-            //put your multiplatform dependencies here
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+            }
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+        val commonTest by getting {
+            dependencies {
+
+            }
+        }
+
+        val jvmSharedMain by creating {
+            dependsOn(commonMain)
+        }
+        val jvmSharedTest by creating {
+            dependsOn(commonTest)
+        }
+
+        val jvmMain by getting {
+            dependsOn(jvmSharedMain)
+        }
+        val jvmTest by getting {
+            dependsOn(jvmSharedTest)
+            dependencies {
+                implementation(libs.truth)
+                implementation(libs.mockk)
+            }
+        }
+
+        val androidMain by getting {
+            dependsOn(jvmSharedMain)
+        }
+        val androidUnitTest by getting {
+            dependsOn(jvmSharedTest)
         }
     }
 }
 
 android {
-    namespace = "org.pointyware.kass"
+    namespace = "org.pointyware.painteddogs.assertions"
     compileSdk = 34
     defaultConfig {
-        minSdk = 24
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        minSdk = 21
     }
 }
