@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    `maven-publish`
 }
 
 kotlin {
@@ -78,5 +79,28 @@ android {
     compileSdk = 34
     defaultConfig {
         minSdk = 21
+    }
+}
+
+version = libs.versions.kass.get()
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["kotlin"])
+            groupId = "org.pointyware.kass"
+            artifactId = "assertions"
+            version = libs.versions.kass.get()
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/Pointyware/Kass")
+            credentials {
+                username = project.findProperty("GITHUB_USER") as String?
+                password = project.findProperty("GITHUB_TOKEN") as String?
+            }
+        }
     }
 }
