@@ -1,8 +1,5 @@
 package org.pointyware.kass.assertions
 
-import org.pointyware.kass.assertions.FailedAssumption
-import org.pointyware.kass.assertions.assume
-import org.pointyware.kass.assertions.runTestWith
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.fail
