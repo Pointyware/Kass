@@ -86,8 +86,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/Pointyware/Kass")
             credentials {
-                username = project.findProperty("GITHUB_USER") as String?
-                password = project.findProperty("GITHUB_TOKEN") as String?
+                username = project.property("BUILD_USER").toString()
+                password = project.property("BUILD_TOKEN").toString()
             }
         }
     }
