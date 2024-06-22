@@ -7,19 +7,12 @@ plugins {
 }
 
 kotlin {
+    jvmToolchain(17)
     jvm {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
+
     }
     androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
+        publishLibraryVariants("release", "debug")
     }
     val framework = XCFramework()
     listOf(
