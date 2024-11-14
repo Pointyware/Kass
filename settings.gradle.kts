@@ -16,4 +16,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Kass"
 include(":assertions")
-include(":mocks")
