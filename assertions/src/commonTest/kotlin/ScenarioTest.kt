@@ -8,7 +8,7 @@ import kotlin.test.fail
  */
 class ScenarioTest {
     @Test
-    fun `failed assumptions within test scenario prevent any further execution and allow tests to pass`() {
+    fun failed_assumptions_within_test_scenario_prevent_any_further_execution_and_allow_tests_to_pass() {
         runTestWith("") {
             assume().that(subject).isNotEmpty()
             fail("This should not be reached")
@@ -16,7 +16,7 @@ class ScenarioTest {
     }
 
     @Test
-    fun `failed assumptions outside test scenario are not caught and cause the test to fail`() {
+    fun failed_assumptions_outside_test_scenario_are_not_caught_and_cause_the_test_to_fail() {
         assertFailsWith<FailedAssumption> {
             assume().that("").isNotEmpty()
         }
