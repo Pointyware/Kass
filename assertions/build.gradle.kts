@@ -91,8 +91,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/Pointyware/Kass")
             credentials {
-                username = providers.gradleProperty("BUILD_USER").get()
-                password = providers.gradleProperty("BUILD_TOKEN").get()
+                username = providers.gradleProperty("github.user").get()
+                password = providers.gradleProperty("github.token").get()
             }
         }
     }
