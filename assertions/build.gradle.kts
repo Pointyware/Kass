@@ -14,6 +14,11 @@ kotlin {
     androidTarget {
         publishLibraryVariants("release", "debug")
     }
+    js {
+        browser {
+            binaries.executable()
+        }
+    }
     val framework = XCFramework()
     listOf(
         iosX64(),
