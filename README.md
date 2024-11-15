@@ -1,6 +1,9 @@
 # Kass
 Kotlin Common Assertions
 
+## Platform Support
+Kass is a multiplatform library, supporting JVM, Android, iOS (x64, ARM, Simulator-ARM), JS.
+
 ## Usage
 `assert()` and `assume()` both return objects that allow you to write expectations in a fluent style.
 `assert()` returns an `Assertion` object, while `assume()` returns an `Assumption` object.
