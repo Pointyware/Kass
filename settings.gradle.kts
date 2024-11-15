@@ -8,6 +8,7 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
+    @Suppress("UnstableApiUsage")
     repositories {
         google()
         mavenCentral()
@@ -16,4 +17,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Kass"
 include(":assertions")
-include(":mocks")
