@@ -12,9 +12,11 @@ data class Scenario<T: Any>(
  * given test block. Catches any [FailedAssumption], skipping the test, and
  * re-throws any other exception to allow normal test failure handling.
  */
-fun <T: Any> runScenarioWith(subject: T, testCase: Scenario<T>.() -> Unit) {
-    Scenario(subject).also {
-        testHypothesis { it.testCase() }
+fun <T: Any> runScenarioWith(subjectProvider: Collection<T>, testCase: Scenario<T>.() -> Unit) {
+    subjectProvider.forEach { subject ->
+        Scenario(subject).also {
+            testHypothesis { it.testCase() }
+        }
     }
 }
 
