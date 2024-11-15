@@ -9,7 +9,7 @@ import kotlin.test.fail
 class ScenarioTest {
     @Test
     fun failed_assumptions_within_test_scenario_prevent_any_further_execution_and_allow_tests_to_pass() {
-        runTestWith("") {
+        runScenarioWith("") {
             assume().that(subject).isNotEmpty()
             fail("This should not be reached")
         }

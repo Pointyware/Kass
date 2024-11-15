@@ -12,15 +12,24 @@ data class Scenario<T: Any>(
  * given test block. Catches any [FailedAssumption], skipping the test, and
  * re-throws any other exception to allow normal test failure handling.
  */
-fun <T: Any> runTestWith(subject: T, testCase: Scenario<T>.() -> Unit) {
+fun <T: Any> runScenarioWith(subject: T, testCase: Scenario<T>.() -> Unit) {
     Scenario(subject).also {
-        try {
-            it.testCase()
-        } catch (e: FailedAssumption) {
-            println("Assumption failed: ${e.message}")
-            println(e.stackTraceToString())
-        } catch (e: Throwable) {
-            throw e
-        }
+        testHypothesis { it.testCase() }
+    }
+}
+
+/**
+ * Tests a hypothesis expressed as assumptions and assertions.
+ * Catches any [FailedAssumption], skipping the test, and
+ * re-throws any other exception to allow normal test failure handling.
+ */
+fun testHypothesis(testCase: () -> Unit) {
+    try {
+        testCase()
+    } catch (e: FailedAssumption) {
+        println("Assumption failed: ${e.message}")
+        println(e.stackTraceToString())
+    } catch (e: Throwable) {
+        throw e
     }
 }
