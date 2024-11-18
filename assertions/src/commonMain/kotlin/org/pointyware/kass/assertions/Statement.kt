@@ -25,13 +25,17 @@ fun <T> Statement<T>.and(other: Statement<T>) = object: Statement<T> {
         get() = this@and.failureMessage + " or " + other.failureMessage
 }
 
+private inline fun <T> throwOnEvaluationFail(subject: T, statement: Statement<T>, asserter: Asserter) {
+    if (statement.evaluate(subject).not()) {
+        asserter.fail(statement.failureMessage)
+    }
+}
+
 /**
  * Evaluates the given [statement] with the given [subject] and the default asserter.
  */
 fun <T:Any?> assertThat(subject: T, statement: Statement<T>) {
-    if (statement.evaluate(subject).not()) {
-        asserter.fail(statement.failureMessage)
-    }
+    throwOnEvaluationFail(subject, statement, asserter)
 }
 
 /**
@@ -39,9 +43,7 @@ fun <T:Any?> assertThat(subject: T, statement: Statement<T>) {
  * statement fails, it will throw a [FailedAssumption].
  */
 fun <T:Any?> assumeThat(subject: T, statement: Statement<T>) {
-    if (statement.evaluate(subject).not()) {
-        presumptuousAsserter.fail(statement.failureMessage)
-    }
+    throwOnEvaluationFail(subject, statement, presumptuousAsserter)
 }
 
 private val presumptuousAsserter = object: Asserter {
