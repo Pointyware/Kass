@@ -24,7 +24,9 @@ jobs:
           git push origin $versionString
       - name: Publish
         run: |
-          ./gradlew publishAllPublicationsToGitHubPackagesRepository \
+          ./gradlew publishKotlinMultiplatformPublicationToGitHubPackagesRepository \
+            publishJvmPublicationToGitHubPackagesRepository \
+            publishAndroidDebugPublicationToGitHubPackagesRepository \
+            publishAndroidReleasePublicationToGitHubPackagesRepository \
             -Pgithub.user=${{ secrets.BUILD_USER }} \
             -Pgithub.token=${{ secrets.BUILD_TOKEN }}
-
