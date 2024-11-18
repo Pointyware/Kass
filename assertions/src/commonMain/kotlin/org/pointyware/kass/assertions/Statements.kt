@@ -1,6 +1,7 @@
 package org.pointyware.kass.assertions
 
 import kotlin.test.Asserter
+import kotlin.test.asserter
 
 /**
  * Represents a scope in which statements about a subject can be made.
@@ -26,7 +27,7 @@ data class StatementScope(
 }
 
 fun assert(): StatementScope {
-    return StatementScope(kotlin.test.asserter)
+    return StatementScope(asserter)
 }
 
 fun assume(): StatementScope {
