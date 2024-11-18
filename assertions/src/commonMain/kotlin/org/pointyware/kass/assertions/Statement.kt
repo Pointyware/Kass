@@ -11,6 +11,14 @@ fun interface Statement<T> {
 }
 
 /**
+ * Combines the receiver statement with [other] to create a new statement that evaluates both.
+ */
+fun <T> Statement<T>.and(other: Statement<T>) = Statement<T> { subject, asserter ->
+    evaluate(subject, asserter)
+    other.evaluate(subject, asserter)
+}
+
+/**
  * Evaluates the given [statement] with the given [subject] and the default asserter.
  */
 fun <T:Any?> assertThat(subject: T, statement: Statement<T>) {
