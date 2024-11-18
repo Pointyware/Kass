@@ -11,6 +11,14 @@ fun interface Statement<T> {
     fun evaluate(subject: T, asserter: Asserter)
 }
 
+fun <T:Any?> assertThat(subject: T, statement: Statement<T>) {
+    statement.evaluate(subject, asserter)
+}
+
+fun <T:Any?> assumeThat(subject: T, statement: Statement<T>) {
+    statement.evaluate(subject, presumptuousAsserter)
+}
+
 /**
  * Represents a scope in which statements about a subject can be made.
  */
