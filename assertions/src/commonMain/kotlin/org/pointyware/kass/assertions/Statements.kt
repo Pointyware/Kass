@@ -27,10 +27,17 @@ data class StatementScope(
     }
 }
 
+/**
+ * Convenience property for creating a [StatementScope] with the default asserter.
+ */
 val assert: StatementScope get() {
     return StatementScope(asserter)
 }
 
+/**
+ * Convenience property for creating a [StatementScope] with a presumptuous asserter. When a
+ * statement fails, it will throw a [FailedAssumption] instead of a [Throwable].
+ */
 val assume: StatementScope get() {
     return StatementScope(presumptuousAsserter)
 }
