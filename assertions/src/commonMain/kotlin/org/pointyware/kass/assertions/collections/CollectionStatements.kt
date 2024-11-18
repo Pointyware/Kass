@@ -13,4 +13,12 @@ object CollectionStatements {
     fun <T> doesNotContain(item: T) = Statement<Collection<T>> { subject, asserter ->
         asserter.assertTrue("$subject contains $item", item !in subject)
     }
+
+    fun <T> isIn(items: Collection<T>) = Statement<T> { subject, asserter ->
+        asserter.assertTrue("$subject is not in $items", subject in items)
+    }
+
+    fun <T> isNotIn(items: Collection<T>) = Statement<T> { subject, asserter ->
+        asserter.assertTrue("$subject is in $items", subject !in items)
+    }
 }

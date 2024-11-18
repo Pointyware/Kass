@@ -18,14 +18,6 @@ open class Condition<T>(
         asserter.assertNotEquals("$subject is equal to $other", other, subject)
         return this
     }
-    fun isIn(items: Collection<T>): Condition<T> {
-        asserter.assertTrue("$subject is not in $items", subject in items)
-        return this
-    }
-    fun isNotIn(items: Collection<T>): Condition<T> {
-        asserter.assertTrue("$subject is in $items", subject !in items)
-        return this
-    }
     fun isNull(): Condition<T> {
         asserter.assertNull("$subject is not null", subject)
         return this
