@@ -60,16 +60,3 @@ open class NumberCondition<T: Number>(
         return this
     }
 }
-
-/**
- * Extends [Condition] to provide additional statements for strings.
- */
-class StringCondition(
-    override val subject: String,
-    asserter: Asserter
-): Condition<String>(subject, asserter) {
-    fun isNotEmpty(): StringCondition {
-        asserter.assertTrue("String is empty", subject.isNotEmpty())
-        return this
-    }
-}

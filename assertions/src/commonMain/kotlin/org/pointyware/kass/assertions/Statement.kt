@@ -38,9 +38,6 @@ data class StatementScope(
     fun <N: Number> that(subject: N): NumberCondition<N> {
         return NumberCondition(subject, asserter)
     }
-    fun that(subject: String): StringCondition {
-        return StringCondition(subject, asserter)
-    }
     fun <E> that(subject: Collection<E>): CollectionCondition<E> {
         return CollectionCondition(subject, asserter)
     }
