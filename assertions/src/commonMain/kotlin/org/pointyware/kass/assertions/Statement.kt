@@ -11,10 +11,17 @@ fun interface Statement<T> {
     fun evaluate(subject: T, asserter: Asserter)
 }
 
+/**
+ * Evaluates the given [statement] with the given [subject] and the default asserter.
+ */
 fun <T:Any?> assertThat(subject: T, statement: Statement<T>) {
     statement.evaluate(subject, asserter)
 }
 
+/**
+ * Evaluates the given [statement] with the given [subject] and a presumptuous asserter. When the
+ * statement fails, it will throw a [FailedAssumption].
+ */
 fun <T:Any?> assumeThat(subject: T, statement: Statement<T>) {
     statement.evaluate(subject, presumptuousAsserter)
 }
