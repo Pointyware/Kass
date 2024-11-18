@@ -25,17 +25,6 @@ fun <T:Any?> assumeThat(subject: T, statement: Statement<T>) {
     statement.evaluate(subject, presumptuousAsserter)
 }
 
-/**
- * Represents a scope in which statements about a subject can be made.
- */
-data class StatementScope(
-    val asserter: Asserter
-) {
-    fun <T: Any?> that(subject: T): Condition<T> {
-        return Condition(subject, asserter)
-    }
-}
-
 private val presumptuousAsserter = object: Asserter {
     override fun fail(message: String?): Nothing {
         throw FailedAssumption("Assumption failed - $message", null)
