@@ -1,5 +1,6 @@
 package org.pointyware.kass.assertions
 
+import org.pointyware.kass.assertions.collections.CollectionCondition
 import kotlin.test.Asserter
 import kotlin.test.asserter
 
@@ -26,11 +27,11 @@ data class StatementScope(
     }
 }
 
-fun assert(): StatementScope {
+val assert: StatementScope get() {
     return StatementScope(asserter)
 }
 
-fun assume(): StatementScope {
+val assume: StatementScope get() {
     return StatementScope(presumptuousAsserter)
 }
 
