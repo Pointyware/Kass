@@ -5,6 +5,13 @@ import kotlin.test.Asserter
 import kotlin.test.asserter
 
 /**
+ * Represents a statement about a subject that can be evaluated, using the given asserter.
+ */
+fun interface Statement<T> {
+    fun evaluate(subject: T, asserter: Asserter)
+}
+
+/**
  * Represents a scope in which statements about a subject can be made.
  */
 data class StatementScope(
@@ -26,21 +33,10 @@ data class StatementScope(
         return ResultCondition(subject, asserter)
     }
 
-    fun <T: Any?> that(subject: T, statement: Condition<T>) {
-
+    fun <T: Any?> that(subject: T, statement: Statement<T>) {
+        statement.evaluate(subject, asserter)
     }
 }
-
-fun interface Statement<T> {
-    fun evaluate(subject: T, asserter: Asserter)
-}
-
-fun interface Expression<T> {
-    fun evaluate(subject: T, asserter: Asserter): Boolean
-}
-
-fun `is`(expression: Expression<Any?>): Statement<Any?> =
-    Statement { subject, asserter -> expression.evaluate(subject, asserter) }
 
 /**
  * Convenience property for creating a [StatementScope] with the default asserter.
