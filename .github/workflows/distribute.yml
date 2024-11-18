@@ -7,6 +7,8 @@ on:
 jobs:
   release:
     runs-on: [ubuntu-latest]
+    permissions:
+      contents: write
     steps:
       - name: Setup
         uses: Pointyware/.github/.github/actions/checkout-java-gradle@b70bbae19637171d6cf9311f06a59f1c15e2598b
