@@ -1,0 +1,27 @@
+name: Publish
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  release:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Setup
+        uses: Pointyware/.github/.github/actions/checkout-java-gradle@b70bbae19637171d6cf9311f06a59f1c15e2598b
+      - name: Get Version String
+        run: |
+          echo LIB_VERSION=$(cat gradle/libs.versions.toml |
+            grep "kass" | sed 's/.*\"\(.*\)\"/\1/') >> "$GITHUB_ENV"
+      - name: Tag Version
+        run: |
+          versionString=v$LIB_VERSION
+          git tag $versionString
+          git push origin $versionString
+      - name: Publish
+        run: |
+          ./gradlew publishAllPublicationsToGitHubPackagesRepository \
+            -Pgithub.user=${{ secrets.BUILD_USER }} \
+            -Pgithub.token=${{ secrets.BUILD_TOKEN }}
+
