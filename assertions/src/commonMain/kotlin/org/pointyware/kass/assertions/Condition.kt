@@ -73,25 +73,3 @@ class StringCondition(
         return this
     }
 }
-
-/**
- * Extends [Condition] to provide additional statements for results.
- */
-class ResultCondition<T>(
-    override val subject: Result<T>,
-    asserter: Asserter
-): Condition<Result<T>>(subject, asserter) {
-    fun isFailure(): ResultCondition<T> {
-        asserter.assertTrue("Result is not a failure", subject.isFailure)
-        return this
-    }
-
-    fun isSuccess(): ResultCondition<T> {
-        asserter.assertTrue("Result is not a success", subject.isSuccess)
-        return this
-    }
-
-    override fun and(): ResultCondition<T> {
-        return this
-    }
-}

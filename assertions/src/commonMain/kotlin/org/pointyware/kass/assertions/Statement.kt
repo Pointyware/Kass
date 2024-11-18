@@ -44,13 +44,6 @@ data class StatementScope(
     fun <E> that(subject: Collection<E>): CollectionCondition<E> {
         return CollectionCondition(subject, asserter)
     }
-    fun <E> that(subject: Result<E>): ResultCondition<E> {
-        return ResultCondition(subject, asserter)
-    }
-
-    fun <T: Any?> that(subject: T, statement: Statement<T>) {
-        statement.evaluate(subject, asserter)
-    }
 }
 
 /**
