@@ -1,6 +1,5 @@
 package org.pointyware.kass.assertions
 
-import org.pointyware.kass.assertions.collections.CollectionCondition
 import kotlin.test.Asserter
 import kotlin.test.asserter
 
@@ -34,9 +33,6 @@ data class StatementScope(
 ) {
     fun <T: Any?> that(subject: T): Condition<T> {
         return Condition(subject, asserter)
-    }
-    fun <N: Number> that(subject: N): NumberCondition<N> {
-        return NumberCondition(subject, asserter)
     }
 }
 

@@ -39,24 +39,3 @@ open class Condition<T>(
         return this
     }
 }
-
-/**
- * Extends [Condition] to provide additional statements for numbers.
- */
-open class NumberCondition<T: Number>(
-    override val subject: T,
-    asserter: Asserter
-): Condition<T>(subject, asserter) {
-    fun isGreaterThan(value: T): NumberCondition<T> {
-        asserter.assertTrue("$subject is not greater than $value", subject.toDouble() > value.toDouble())
-        return this
-    }
-    fun isAtMost(value: T): NumberCondition<T> {
-        asserter.assertTrue("$subject is not at most $value", subject.toDouble() <= value.toDouble())
-        return this
-    }
-
-    override fun and(): NumberCondition<T> {
-        return this
-    }
-}
