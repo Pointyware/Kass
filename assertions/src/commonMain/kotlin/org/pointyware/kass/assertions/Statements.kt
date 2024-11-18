@@ -25,7 +25,22 @@ data class StatementScope(
     fun <E> that(subject: Result<E>): ResultCondition<E> {
         return ResultCondition(subject, asserter)
     }
+
+    fun <T: Any?> that(subject: T, statement: Condition<T>) {
+
+    }
 }
+
+fun interface Statement<T> {
+    fun evaluate(subject: T, asserter: Asserter)
+}
+
+fun interface Expression<T> {
+    fun evaluate(subject: T, asserter: Asserter): Boolean
+}
+
+fun `is`(expression: Expression<Any?>): Statement<Any?> =
+    Statement { subject, asserter -> expression.evaluate(subject, asserter) }
 
 /**
  * Convenience property for creating a [StatementScope] with the default asserter.
@@ -36,7 +51,7 @@ val assert: StatementScope get() {
 
 /**
  * Convenience property for creating a [StatementScope] with a presumptuous asserter. When a
- * statement fails, it will throw a [FailedAssumption] instead of a [Throwable].
+ * statement fails, it will throw a [FailedAssumption].
  */
 val assume: StatementScope get() {
     return StatementScope(presumptuousAsserter)
