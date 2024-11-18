@@ -4,25 +4,34 @@ import kotlin.test.Asserter
 import kotlin.test.asserter
 
 /**
- * Represents a statement about a subject that can be evaluated, using the given asserter.
+ * Represents a statement that can be evaluated against a subject. The statement also provides a
+ * [failureMessage] in case the evaluation returns false.
  */
-fun interface Statement<T> {
-    fun evaluate(subject: T, asserter: Asserter)
+interface Statement<T> {
+    fun evaluate(subject: T): Boolean
+    val failureMessage: String
 }
 
 /**
  * Combines the receiver statement with [other] to create a new statement that evaluates both.
  */
-fun <T> Statement<T>.and(other: Statement<T>) = Statement<T> { subject, asserter ->
-    evaluate(subject, asserter)
-    other.evaluate(subject, asserter)
+fun <T> Statement<T>.and(other: Statement<T>) = object: Statement<T> {
+
+    override fun evaluate(subject: T): Boolean {
+        return this@and.evaluate(subject) && other.evaluate(subject)
+    }
+
+    override val failureMessage: String
+        get() = this@and.failureMessage + " and " + other.failureMessage
 }
 
 /**
  * Evaluates the given [statement] with the given [subject] and the default asserter.
  */
 fun <T:Any?> assertThat(subject: T, statement: Statement<T>) {
-    statement.evaluate(subject, asserter)
+    if (statement.evaluate(subject).not()) {
+        asserter.fail(statement.failureMessage)
+    }
 }
 
 /**
@@ -30,7 +39,9 @@ fun <T:Any?> assertThat(subject: T, statement: Statement<T>) {
  * statement fails, it will throw a [FailedAssumption].
  */
 fun <T:Any?> assumeThat(subject: T, statement: Statement<T>) {
-    statement.evaluate(subject, presumptuousAsserter)
+    if (statement.evaluate(subject).not()) {
+        presumptuousAsserter.fail(statement.failureMessage)
+    }
 }
 
 private val presumptuousAsserter = object: Asserter {

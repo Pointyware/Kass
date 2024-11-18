@@ -6,7 +6,12 @@ import org.pointyware.kass.assertions.Statement
  *
  */
 object StringStatements {
-    fun isNotEmpty() = Statement<String> { subject, asserter ->
-        asserter.assertTrue("String is empty", subject.isNotEmpty())
+    fun isNotEmpty() = object: Statement<String> {
+        override fun evaluate(subject: String): Boolean {
+            return subject.isNotEmpty()
+        }
+
+        override val failureMessage: String
+            get() = "String is empty"
     }
 }
