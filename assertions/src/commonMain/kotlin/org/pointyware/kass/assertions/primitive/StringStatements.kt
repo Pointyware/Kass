@@ -1,8 +1,6 @@
 package org.pointyware.kass.assertions.primitive
 
-import org.pointyware.kass.assertions.Condition
 import org.pointyware.kass.assertions.Statement
-import kotlin.test.Asserter
 
 /**
  *
