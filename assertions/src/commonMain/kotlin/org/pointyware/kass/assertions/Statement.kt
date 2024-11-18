@@ -22,7 +22,7 @@ fun <T> Statement<T>.and(other: Statement<T>) = object: Statement<T> {
     }
 
     override val failureMessage: String
-        get() = this@and.failureMessage + " and " + other.failureMessage
+        get() = this@and.failureMessage + " or " + other.failureMessage
 }
 
 /**
