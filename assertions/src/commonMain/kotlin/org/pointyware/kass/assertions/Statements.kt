@@ -52,4 +52,4 @@ private val presumptuousAsserter = object: Asserter {
     }
 }
 
-class FailedAssumption(msg: String?, cause: Throwable?): Throwable(msg, cause)
+class FailedAssumption(msg: String?, cause: Throwable?): Exception(msg, cause)
