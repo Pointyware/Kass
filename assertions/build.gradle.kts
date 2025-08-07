@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     `maven-publish`
+    alias(libs.plugins.publishMultiplatform)
 }
 
 kotlin {
@@ -92,6 +93,40 @@ publishing {
                 username = providers.gradleProperty("github.user").get()
                 password = providers.gradleProperty("github.token").get()
             }
+        }
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral()
+
+    signAllPublications()
+
+    coordinates("org.pointyware.kass", "assertions", libs.versions.kass.get())
+
+    pom {
+        name = "Kass"
+        description = "Kotlin Assertions"
+        inceptionYear = "2024"
+        url = "http://github.com/Pointyware/Kass"
+        licenses {
+            license {
+                name = "GNU General Public License, 3.0"
+                url = "https://www.gnu.org/licenses/gpl-3.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "TSampley"
+                name = "Taush Sampley"
+                email = "tsampley@pointyware.org"
+            }
+        }
+        scm {
+            val repo = "github.com/Pointyware/Kass"
+            connection = "scm:git:git://$repo.git"
+            developerConnection = "scm:git:ssh://$repo.git"
+            url = "http://$repo/"
         }
     }
 }
