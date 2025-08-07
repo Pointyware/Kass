@@ -82,21 +82,6 @@ android {
 group = "org.pointyware.kass"
 version = libs.versions.kass.get()
 
-publishing {
-    publications {
-    }
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/Pointyware/Kass")
-            credentials {
-                username = providers.gradleProperty("github.user").get()
-                password = providers.gradleProperty("github.token").get()
-            }
-        }
-    }
-}
-
 mavenPublishing {
     publishToMavenCentral()
 
